@@ -87,6 +87,16 @@ export default class Index extends Component {
             <div>
                 <h1>列表数据渲染</h1>
                 <Table columns={this.columns} dataSource={this.data} />
+                <h1>静态图片渲染</h1>
+                <img src='/favicon.ico'/>
+                <h1>html页面渲染</h1>
+                <iframe
+                    title="resg"
+                    src="https://baidu.com"
+                    style={{ width: '100%', border: '0px', height: '1100px' }}
+                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                    scrolling="auto"
+                />
             </div>
         )
     }
