@@ -1,8 +1,16 @@
 import React, { Component } from 'react'
-import { Tag, Space, Table } from 'antd';
+import { Tag, Space, Table, Button } from 'antd';
+import { connect } from 'react-redux';
+import * as counterActions from '../../actions/counter';
+import { bindActionCreators } from 'redux';
 import "antd/dist/antd.css";
 
-export default class Index extends Component {
+interface Props {
+    counter: number,
+    counterActions: any,
+}
+
+class Index extends React.Component<Props> {
 
     static async getInitialProps() {
         return { props: { name: 'dong' } }
@@ -82,22 +90,40 @@ export default class Index extends Component {
     ];
 
     render() {
-        console.log(this.props);
         return (
             <div>
                 <h1>列表数据渲染</h1>
                 <Table columns={this.columns} dataSource={this.data} />
                 <h1>静态图片渲染</h1>
                 <img src='/favicon.ico'/>
+                <h1>redux</h1>
+
                 <h1>html页面渲染</h1>
-                <iframe
+                <div>{this.props.counter} </div>
+                <button onClick={ () => this.props.counterActions.increment(10) }>增加</button>
+                <button onClick={ () => this.props.counterActions.decrement(10)}>减少</button>
+                {/* <iframe
                     title="resg"
                     src="https://baidu.com"
                     style={{ width: '100%', border: '0px', height: '1100px' }}
                     sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                     scrolling="auto"
-                />
+                /> */}
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        counter: state.counter
+    }
+};
+
+const mapDispatchToProps = (despatch) => {
+        return {
+            counterActions: bindActionCreators(counterActions,despatch)
+        }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Index);
