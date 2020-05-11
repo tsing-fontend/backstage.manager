@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
+import Router from 'next/router';
 import './layout.css';
+import { connect } from 'react-redux';
 import { Layout, Menu } from 'antd';
 import {
     DashboardOutlined,
@@ -15,12 +17,22 @@ interface IProps {
     Component: any;
     pageProps: any;
     router: any;
+    user: any;
 }
 
-export default class LayoutComponent extends React.Component<IProps> {
+class LayoutComponent extends React.Component<IProps> {
+
+    static async getInitialProps() {
+
+        return {  }
+    }
 
     render() {
         const { Component, pageProps, router } = this.props;
+        if( !(this.props && this.props.user && this.props.user.id)){
+            const isClient = typeof document !== 'undefined'
+            isClient && Router.replace('/login') 
+        }
         return (
             <div>
                 <Head>
@@ -145,3 +157,11 @@ export default class LayoutComponent extends React.Component<IProps> {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+};
+
+export default connect(mapStateToProps)(LayoutComponent)

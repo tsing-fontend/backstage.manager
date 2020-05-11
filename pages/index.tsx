@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
-import {Button} from 'antd'
+import { connect } from 'react-redux';
 
-export default class Index extends Component {
+class Index extends Component {
     render() {
+        console.log(this.props);
         return (
             <div>
-                <iframe
-                    title="resg"
-                    src="http://backstage.tying.info/auth/user/list"
-                    style={{ width: '100%', border: '0px', height: '1100px' }}
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                    scrolling="auto"
-                />
+               11
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+};
+
+export default connect(mapStateToProps)(Index)

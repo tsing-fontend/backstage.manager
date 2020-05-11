@@ -1,25 +1,46 @@
 import React from 'react';
-import App, {Container} from 'next/app';
+import App from 'next/app';
+import loggerMiddleware from 'redux-logger';
 import LayoutComponent from '../components/layout';
 import "antd/dist/antd.css";
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import rootReducer from '../reducers/index';
 
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer,{},applyMiddleware(loggerMiddleware));
 
-export default class MyApp extends App {
+interface Props {
+    user: any,
+}
+
+class MyApp extends App<Props> {
 
     render() {
-        const { Component, pageProps ,router} = this.props;
+        const { Component, pageProps, router } = this.props;
+        const { asPath, pathname } = router;
+        let container: any;
+
+        if ('/login' === asPath || '/login' === pathname) {
+            container = ( 
+                <Provider store={store}>
+                    <Component {...pageProps} />
+                </Provider>
+            )
+        } else {
+            container = (
+                <Provider store={store}>
+                    <LayoutComponent
+                        Component={Component}
+                        pageProps={pageProps}
+                        router={router} />
+                </Provider>
+            )
+        }
         return (
-            <Provider store= {store}>
-                <LayoutComponent 
-                    Component={Component}
-                    pageProps={pageProps}
-                    router={router}/>
-            </Provider>               
+            container         
         )
     }
 }
+
+export default MyApp

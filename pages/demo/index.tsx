@@ -2,18 +2,21 @@ import React, { Component } from 'react'
 import { Tag, Space, Table, Button } from 'antd';
 import { connect } from 'react-redux';
 import * as counterActions from '../../actions/counter';
+import * as userActions from '../../actions/user';
 import { bindActionCreators } from 'redux';
 import "antd/dist/antd.css";
 
 interface Props {
     counter: number,
+    user: any,
     counterActions: any,
+    userActions:any,
 }
 
 class Index extends React.Component<Props> {
 
     static async getInitialProps() {
-        return { props: { name: 'dong' } }
+        return {  }
     }
 
     columns = [
@@ -100,8 +103,10 @@ class Index extends React.Component<Props> {
 
                 <h1>html页面渲染</h1>
                 <div>{this.props.counter} </div>
+                {/* <div>{{}} </div> */}
                 <button onClick={ () => this.props.counterActions.increment(10) }>增加</button>
                 <button onClick={ () => this.props.counterActions.decrement(10)}>减少</button>
+                <button onClick={ () => this.props.userActions.saveUser({"usernmae": '测试'})}>设置用户信息</button>
                 {/* <iframe
                     title="resg"
                     src="https://baidu.com"
@@ -116,13 +121,15 @@ class Index extends React.Component<Props> {
 
 const mapStateToProps = (state) => {
     return {
-        counter: state.counter
+        counter: state.counter,
+        user: state.user,
     }
 };
 
 const mapDispatchToProps = (despatch) => {
         return {
-            counterActions: bindActionCreators(counterActions,despatch)
+            counterActions: bindActionCreators(counterActions,despatch),
+            userActions: bindActionCreators(userActions,despatch),
         }
 };
 
