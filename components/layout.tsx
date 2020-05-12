@@ -35,10 +35,6 @@ class LayoutComponent extends React.Component<IProps> {
         }
         return (
             <div>
-                <Head>
-                    <title>Tsing</title>
-                    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                </Head>
                 <Layout>
                     <Sider
                         style={{
@@ -51,29 +47,14 @@ class LayoutComponent extends React.Component<IProps> {
                         <Menu
                             theme="dark"
                             mode="inline">
-                            <SubMenu
-                                key='datameta'
-                                title={
-                                    <span>
-                                        <span>仪表盘</span>
-                                    </span>
-                                }
-                                icon={<DashboardOutlined />}>
-                                <Menu.Item key='/' title="图表">
-                                    <Link href='/'>
-                                        <div style={{
-                                            width: '100%'
-                                        }}>业务数据统计</div>
-                                    </Link>
-                                </Menu.Item>
-                            </SubMenu>
+                            <Menu.Item key='1' 
+                                icon={<DashboardOutlined />}
+                                title="仪表盘">
+                                    <Link href='/'>仪表盘</Link>
+                            </Menu.Item>
                             <SubMenu
                                 key='auth'
-                                title={
-                                    <span>
-                                        <span>权限管理</span>
-                                    </span>
-                                }
+                                title='权限管理'
                                 icon={<TrademarkCircleOutlined />}>
                                 <Menu.Item key='/auth/user/list' title="用户管理">
                                     <Link href='/auth/user/list'>
