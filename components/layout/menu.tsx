@@ -15,11 +15,11 @@ export default class MenuComponent extends React.Component {
         {
           path: "/auth", title: "权限管理", icon: <TrademarkCircleOutlined />,
           children: [
-            { path: "/auth/users", title: "用户管理", },
+            { path: "/auth/user/users", title: "用户管理", },
             { path: "/auth/roles", title: "角色管理", },
             { path: "/auth/menus", title: "菜单管理", },
             { path: "/auth/departments", title: "部门管理", },
-            { path: "/auth/positions", title: "职位管理", },
+            { path: "/auth/position/positions", title: "职位管理", },
           ]
         },
         {
