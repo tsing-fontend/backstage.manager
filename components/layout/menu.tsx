@@ -18,16 +18,8 @@ export default class MenuComponent extends React.Component {
             { path: "/auth/user/users", title: "用户管理", },
             { path: "/auth/roles", title: "角色管理", },
             { path: "/auth/menus", title: "菜单管理", },
-            { path: "/auth/departments", title: "部门管理", },
+            { path: "/auth/department/departments", title: "部门管理", },
             { path: "/auth/position/positions", title: "职位管理", },
-          ]
-        },
-        {
-          path: "/cms", title: "商品管理", icon :<BlockOutlined />,
-          children: [
-            { path: "/cms/images", title: "图片管理", },
-            { path: "/cms/products", title: "商品管理", },
-            { path: "/cms/metadata", title: "元数据", }
           ]
         }
     ];

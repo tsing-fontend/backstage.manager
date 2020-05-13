@@ -13,7 +13,7 @@ import HeaderComponent from '../components/layout/header';
 import MenuComponent from '../components/layout/menu';
 import FooterComponent from '../components/layout/footer';
 import BreadcrumbComponent from '../components/breadcrumb';
-import Breadcrumbmenu from '../interface/Breadcrumbmenu';
+import Breadcrumbmenu from '../interface/breadcrumbmenu';
 import rootReducer from '../reducers/index';
 
 const store = createStore(rootReducer, {}, applyMiddleware(loggerMiddleware));

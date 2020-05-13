@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 
 // 自定义组件
-import { getPositions, updatePosition, savePosition } from '../../api/auth/position';
+import { getPositions, updatePosition, savePosition, removePosition } from '../../api/auth/position';
 import { PositionPoJo } from '../../../interface/position';
 import Position from './position';
 
@@ -37,19 +37,10 @@ export default class Positions extends React.Component<IProps, IState> {
     private size: number | undefined = undefined;
     private current: number | undefined = undefined;
 
-    // async getInitialProps() {
-       
-    //     const { positions, pagination } = await this.loadPositions();
-    //     return {
-    //         loading: false,
-    //         positions: positions,
-    //         pagination: pagination,
-    //     }
-    // };
     
     componentWillMount () {
         this.loadPositions();
-    }
+    };
 
     private loadPositions = async () => {
 
@@ -130,7 +121,7 @@ export default class Positions extends React.Component<IProps, IState> {
                     {/* 这个地方修改成别样式 */}
                     <Button
                         type="link"
-                        // onClick={() => { this.handleDelete(record.id) }}
+                        onClick={() => { this.handleDelete(record.id) }}
                         >
                         删除
                     </Button>
@@ -176,7 +167,7 @@ export default class Positions extends React.Component<IProps, IState> {
                 });
             };
         }
-        
+        this.loadPositions();
     };
 
     private handleOpenCreate = async () => {
@@ -186,9 +177,24 @@ export default class Positions extends React.Component<IProps, IState> {
             onCreate: this.handleOnCreate,
         })
     };
+
+    private handleDelete = async (value) => {
+        const id = await removePosition(`/positions/${value}`);
+        if (id) {
+            message.success('删除成功', 5);
+            this.loadPositions();
+        } else {
+            message.error('删除失败', 5);
+        }
+    };
+
+    private handleTableChange = (e) => {
+        this.size = e.pageSize;
+        this.current = e.current;
+        this.loadPositions();
+    };
     
     render() {
-       
         return (
             <div>
                 <div style={{
@@ -208,7 +214,7 @@ export default class Positions extends React.Component<IProps, IState> {
                     columns={this.columns}
                     dataSource={this.state.positions}
                     pagination={this.state.pagination}
-                    // onChange={(e) => this.handleTableChange(e)}
+                    onChange={(e) => this.handleTableChange(e)}
                     />
                 <Position
                     visible={this.state.visible}
