@@ -4,7 +4,7 @@ export default class Breadcrumbmenu {
         let map = new Map<string, string>();
         map.set('/','/控制面板');
         map.set('/about','/关于我');
-        map.set('/auth/user/list','权限管理/用户列表');
+        map.set('/auth/user/users','权限管理/用户列表');
         map.set('/auth/position/positions', '权限管理/职位列表');
         map.set('/auth/department/departments', '权限管理/部门列表');
         map.set('/auth/menu/menus', '权限管理/菜单管理');
