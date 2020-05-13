@@ -5,6 +5,7 @@ import { ColumnProps } from 'antd/lib/table';
 import moment from 'moment';
 import { getUsers } from '../../api/user';
 import { UserPoJo } from '../../../interface/user';
+import User from './user';
 
 interface IState {
     users: object[],
@@ -148,11 +149,8 @@ export default class Users extends React.Component<IState> {
         }
     ];
 
-    private handleSearcher = (values) => {
-        // this.loadList(values);
-    };
-
     private handleOpenUpdate = (record) => {
+
     };
 
     private handleOpenCreate = () => {
@@ -178,6 +176,11 @@ export default class Users extends React.Component<IState> {
                     columns={this.columns}
                     dataSource={this.state.users}
                     pagination={this.state.pagination} />
+                <User
+                     visible={true}
+                     title={'用户信息'}
+                     modelWidth={1200}
+                />
             </div>
         )
     }

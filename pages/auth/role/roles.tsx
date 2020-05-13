@@ -181,25 +181,26 @@ export default class Roles extends React.Component<IState> {
     };
 
     private onCreate = async (value) => {
-        if (value.id) {
-            const id = await updateRole(`/roles/${value.id}`, value);
-            if (id) {
-                message.success('修改成功', 5);
-                this.setState({
-                    visible: false,
-                });
-                this.loadList();
-            };
-        } else {
-            const id = await saveRole('/roles', value);
-            if (id) {
-                message.success('添加成功', 5);
-                this.setState({
-                    visible: false,
-                });
-                this.loadList();
-            };
-        }
+        console.log(value);
+        // if (value.id) {
+        //     const id = await updateRole(`/roles/${value.id}`, value);
+        //     if (id) {
+        //         message.success('修改成功', 5);
+        //         this.setState({
+        //             visible: false,
+        //         });
+        //         this.loadList();
+        //     };
+        // } else {
+        //     const id = await saveRole('/roles', value);
+        //     if (id) {
+        //         message.success('添加成功', 5);
+        //         this.setState({
+        //             visible: false,
+        //         });
+        //         this.loadList();
+        //     };
+        // }
 
     };
 

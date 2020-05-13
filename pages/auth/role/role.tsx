@@ -16,7 +16,13 @@ export default class Role extends React.Component<IProps> {
         const closeForm = this.props.closeForm;
         const onCreate = this.props.onCreate;
         const role: any = this.props.role;
-        const menus = this.props.menus;
+        let menus = this.props.menus;
+
+        if(menus[0]) {
+           menus = menus[0].children;
+        }
+      
+        // menus = menus[0].children;
         const layout = {
             labelCol: {
                 xs: { span: 10 },
@@ -103,6 +109,7 @@ export default class Role extends React.Component<IProps> {
                                     name="paramMenus"
                                     label="菜单权限">
                                     <Tree
+                                        key="id"
                                         checkable
                                         showLine={true}
                                         showIcon={true}

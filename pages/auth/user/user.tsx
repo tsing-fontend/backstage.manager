@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Row, Col, Button, Input, Divider, Select, Radio, TreeSelect, message, Modal } from 'antd';
+import { Form, Row, Col, Button, Input, Divider, Select, Radio, TreeSelect, message, Modal, Tree } from 'antd';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -35,6 +35,36 @@ export default class User extends React.Component<IProps> {
             },
         };
 
+        const treeData = [
+            {
+              title: 'parent 1',
+              key: '0-0',
+              children: [
+                {
+                  title: 'parent 1-0',
+                  key: '0-0-0',
+                  disabled: true,
+                  children: [
+                    {
+                      title: 'leaf',
+                      key: '0-0-0-0',
+                      disableCheckbox: true,
+                    },
+                    {
+                      title: 'leaf',
+                      key: '0-0-0-1',
+                    },
+                  ],
+                },
+                {
+                  title: 'parent 1-1',
+                  key: '0-0-1',
+                  children: [{ title: <span style={{ color: '#1890ff' }}>sss</span>, key: '0-0-1-0' }],
+                },
+              ],
+            },
+          ];
+
         const PositionModelForm = ({ visible }) => {
             const [form] = Form.useForm();
             return (
@@ -47,14 +77,15 @@ export default class User extends React.Component<IProps> {
                         // closeForm(false);
                     }}
                     onOk={() => {
-                        // form
-                        //     .validateFields()
-                        //     .then(values => {
-                        //         values.id = position.id;
-                        //         onCreate(values);
-                        //     })
-                        //     .catch(info => {
-                        //     });
+                        form
+                            .validateFields()
+                            .then(values => {
+                                console.log(values)
+                                // values.id = position.id;
+                                // onCreate(values);
+                            })
+                            .catch(info => {
+                            });
                     }}
                     width={modelWidth}>
                     <Form
@@ -102,17 +133,16 @@ export default class User extends React.Component<IProps> {
                             <Col span={12}>
                                 <Form.Item
                                     name="departmentId"
-                                    label="所属部门"
-                                    rules={[{ required: true, message: '请填写所属部门!' }]}>
-                                    <TreeSelect
-                                        style={{ width: '100%' }}
-                                        // value={this.state.departmentIds}
-                                        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                                        // treeData={this.state.deptTree}
-                                        placeholder="请选择所属部门"
-                                        treeDefaultExpandAll
-                                    // onChange={this.onChange}
-                                    />
+                                    label="所属部门">
+                                     <Tree
+                                        checkable
+                                        defaultExpandedKeys={['0-0-0', '0-0-1']}
+                                        defaultSelectedKeys={['0-0-0', '0-0-1']}
+                                        defaultCheckedKeys={['0-0-0', '0-0-1']}
+                                        // onSelect={onSelect}
+                                        // onCheck={onCheck}
+                                        treeData={treeData}
+                                        />
                                 </Form.Item>
                             </Col>
 
