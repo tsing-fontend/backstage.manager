@@ -7,7 +7,7 @@ export default class Breadcrumbmenu {
         map.set('/auth/user/list','权限管理/用户列表');
         map.set('/auth/position/positions', '权限管理/职位列表');
         map.set('/auth/department/departments', '权限管理/部门列表');
-        map.set('/auth/menu/list', '权限管理/菜单管理');
+        map.set('/auth/menu/menus', '权限管理/菜单管理');
         map.set('/auth/menu/role', '权限管理/角色管理');
         if(map.get(location)){
             return map.get(location);
