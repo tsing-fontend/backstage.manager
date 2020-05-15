@@ -5,6 +5,10 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { Layout } from 'antd';
 const { Header, Content, Sider } = Layout;
+// persist store
+import {persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import {PersistGate} from 'redux-persist/integration/react';
 import "antd/dist/antd.css";
 import './index.css';
 
@@ -16,7 +20,13 @@ import BreadcrumbComponent from '../components/breadcrumb';
 import Breadcrumbmenu from '../interface/breadcrumbmenu';
 import rootReducer from '../reducers/index';
 
-const store = createStore(rootReducer, {}, applyMiddleware(loggerMiddleware));
+const myReducer = persistReducer({
+    key: 'root',
+    storage
+}, rootReducer);
+
+const store = createStore(myReducer, {}, applyMiddleware(loggerMiddleware));
+const persistor = persistStore(store);
 
 interface Props {
     user: any,
