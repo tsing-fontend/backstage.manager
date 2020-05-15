@@ -1,17 +1,16 @@
 import React from 'react';
-import { Form, Row, Col, Button, Input, Divider, Select, Radio, TreeSelect, message, Modal, Tree } from 'antd';
-
-const { TextArea } = Input;
+import { Form, Row, Col, Input, Select, Radio, TreeSelect, Modal } from 'antd';
 const { Option } = Select;
+const { SHOW_ALL } = TreeSelect;
 
 interface IProps {
-    // url: any,
     visible: boolean;
     title: string;
+    user: object;
     modelWidth: number;
-    // closeForm: any;
-    // onCreate: any;
-    // position: object;
+    menuTreeData: any,
+    closeForm: any;
+    onCreate: any;
 }
 
 export default class User extends React.Component<IProps> {
@@ -21,9 +20,11 @@ export default class User extends React.Component<IProps> {
         const visible = this.props.visible;
         const title = this.props.title;
         const modelWidth = this.props.modelWidth;
-        // const closeForm = this.props.closeForm;
-        // const onCreate = this.props.onCreate;
-        // const position: any = this.props.position;
+        const treeData = this.props.menuTreeData;
+        const closeForm = this.props.closeForm;
+        const onCreate = this.props.onCreate;
+        const user:any = this.props.user;
+        const menu:any = user.menu;
         const layout = {
             labelCol: {
                 xs: { span: 10 },
@@ -35,35 +36,16 @@ export default class User extends React.Component<IProps> {
             },
         };
 
-        const treeData = [
-            {
-              title: 'parent 1',
-              key: '0-0',
-              children: [
-                {
-                  title: 'parent 1-0',
-                  key: '0-0-0',
-                  disabled: true,
-                  children: [
-                    {
-                      title: 'leaf',
-                      key: '0-0-0-0',
-                      disableCheckbox: true,
-                    },
-                    {
-                      title: 'leaf',
-                      key: '0-0-0-1',
-                    },
-                  ],
-                },
-                {
-                  title: 'parent 1-1',
-                  key: '0-0-1',
-                  children: [{ title: <span style={{ color: '#1890ff' }}>sss</span>, key: '0-0-1-0' }],
-                },
-              ],
+        const tProps = {
+            defaultValue:menu,
+            treeData,
+            treeCheckable: true,
+            showCheckedStrategy: SHOW_ALL,
+            placeholder: '请选择...',
+            style: {
+              width: '100%',
             },
-          ];
+          };
 
         const PositionModelForm = ({ visible }) => {
             const [form] = Form.useForm();
@@ -74,15 +56,14 @@ export default class User extends React.Component<IProps> {
                     okText="保存"
                     cancelText="取消"
                     onCancel={(e) => {
-                        // closeForm(false);
+                        closeForm(false);
                     }}
                     onOk={() => {
                         form
                             .validateFields()
                             .then(values => {
-                                console.log(values)
-                                // values.id = position.id;
-                                // onCreate(values);
+                                values.id = user.id;
+                                onCreate(values);
                             })
                             .catch(info => {
                             });
@@ -91,7 +72,7 @@ export default class User extends React.Component<IProps> {
                     <Form
                         form={form}
                         {...layout}
-                    // initialValues={position}
+                    initialValues={user}
                     >
                         <Row gutter={24}>
                             <Col span={12}>
@@ -129,22 +110,6 @@ export default class User extends React.Component<IProps> {
                                     <Input autoComplete="off" />
                                 </Form.Item>
                             </Col>
-                              
-                            <Col span={12}>
-                                <Form.Item
-                                    name="departmentId"
-                                    label="所属部门">
-                                     <Tree
-                                        checkable
-                                        defaultExpandedKeys={['0-0-0', '0-0-1']}
-                                        defaultSelectedKeys={['0-0-0', '0-0-1']}
-                                        defaultCheckedKeys={['0-0-0', '0-0-1']}
-                                        // onSelect={onSelect}
-                                        // onCheck={onCheck}
-                                        treeData={treeData}
-                                        />
-                                </Form.Item>
-                            </Col>
 
                             <Col span={12}>
                                 <Form.Item name="status" label="状态">
@@ -152,18 +117,6 @@ export default class User extends React.Component<IProps> {
                                         <Radio value={true}>正常</Radio>
                                         <Radio value={false}>禁用</Radio>
                                     </Radio.Group>
-                                </Form.Item>
-                            </Col>
-
-                            <Col span={12}>
-                                <Form.Item name="positionId" label="岗位">
-                                    <Select placeholder="所属岗位">
-                                        {/* {
-                                            this.state.positions.map((item: PositionPoJo) => (
-                                                <Option value={item.id}>{item.name}</Option>
-                                            ))
-                                        } */}
-                                    </Select>
                                 </Form.Item>
                             </Col>
 
@@ -178,22 +131,8 @@ export default class User extends React.Component<IProps> {
                             </Col>
 
                             <Col span={12}>
-                                <Form.Item name="roleIds" label="角色">
-                                    <Select mode="multiple" placeholder="角色">
-                                        {/* {
-                                            this.state.roles.map((item: RolePoJo) => (
-                                                <Option value={item.id}>{item.name}</Option>
-                                            ))
-                                        } */}
-                                    </Select>
-                                </Form.Item>
-                            </Col>
-
-                            <Col span={12}>
-                                <Form.Item name="mark" label="备注">
-                                    <TextArea rows={24} style={{
-                                        height: 50,
-                                    }} />
+                                <Form.Item name="menu" label="菜单权限">
+                                    <TreeSelect {...tProps} />
                                 </Form.Item>
                             </Col>
                         </Row>

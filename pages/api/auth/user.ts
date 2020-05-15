@@ -7,7 +7,7 @@ export const findUser = (url: string) => get({ url: config.OPEN_API + `${url}` }
 
 export const getUsers = (url: string) => get({ url: config.OPEN_API + `${url}` });
 
-export const removeUser = (url: string) => get({ url: config.OPEN_API + `${url}` });
+export const removeUser = (url: string) => deletes({ url: config.OPEN_API + `${url}` });
 
 export const updateUser = (url: string, params: any) => put({ url: config.OPEN_API + `${url}`,data: params});
 

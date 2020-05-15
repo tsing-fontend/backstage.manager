@@ -1,26 +1,35 @@
 import React from 'react';
-import { Table, Button, Switch, Divider, Dropdown, Menu, Tag } from 'antd';
+import { Table, Button, Switch, Divider, Dropdown, Menu, Tag, message } from 'antd';
 import { PlusCircleOutlined, DownOutlined } from '@ant-design/icons';
 import { ColumnProps } from 'antd/lib/table';
 import moment from 'moment';
-import { getUsers } from '../../api/user';
+import { getUsers, updateUser, removeUser } from '../../api/auth/user';
 import { UserPoJo } from '../../../interface/user';
 import User from './user';
+import { getMenu } from '../../api/auth/menu';
+import { saveUser } from '../../api/auth/user';
 
 interface IState {
+    visible: boolean,
     users: object[],
+    user: object,
     pagination: object,
+    menuTreeData: any,
 }
 
 export default class Users extends React.Component<IState> {
 
     readonly state = {
+        visible: false,
+        user: {},
         users: [],
         pagination: {},
+        menuTreeData: [],
     };
 
     componentWillMount() {
         this.loadList();
+        this.loadMenus();
     };
 
     private current: number | undefined = undefined;
@@ -51,18 +60,38 @@ export default class Users extends React.Component<IState> {
 
     };
 
+    private loadMenus = async () => {
+       
+        const menuTreeData = [];
+        const  { records } = await getMenu(`/menus?current=1&size=100`);
+
+        records.forEach(item => {
+                const menu =
+                {
+                    title: item.name,
+                    value: item.id,
+                    key: item.id,
+                };
+                menuTreeData.push(menu);
+        });
+
+        this.setState({
+            menuTreeData: menuTreeData
+        });
+    };
+
     menu = (
         <Menu>
-          <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-                重置密码
+            <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
+                    重置密码
             </a>
-          </Menu.Item>
-          <Menu.Item>
-            <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
-               分配角色
+            </Menu.Item>
+            <Menu.Item>
+                <a target="_blank" rel="noopener noreferrer" href="http://www.taobao.com/">
+                    分配角色
             </a>
-          </Menu.Item>
+            </Menu.Item>
         </Menu>
     );
 
@@ -131,12 +160,13 @@ export default class Users extends React.Component<IState> {
             "render": (record) => (
                 <span>
                     {/* 这个地方修改成别样式 */}
-                    <Button type="link">
+                    <Button type="link"
+                            onClick={() => { this.handleDelete(record.id) }}>
                         删除
                     </Button>
                     <Button
                         type="link"
-                        onClick={ (item) => { this.handleOpenUpdate(record) }} >
+                        onClick={(item) => { this.handleOpenUpdate(record) }} >
                         修改
                     </Button>
                     {/* <Dropdown overlay={this.menu}>
@@ -150,14 +180,54 @@ export default class Users extends React.Component<IState> {
     ];
 
     private handleOpenUpdate = (record) => {
+        this.setState({
+            visible: true,
+            user: record
+        })
+    };
 
+    private closeForm = () => {
+        this.setState({
+            visible: false,
+        });
+    };
+
+    private onCreate = async (value) => {
+        if (value.id) {
+            const id = await updateUser(`/users/${value.id}`, value);
+            if (id) {
+                message.success('修改成功', 5);
+                this.setState({
+                    visible: false,
+                });
+            };
+        } else {
+            const id = await saveUser('/users', value);
+            if (id) {
+                message.success('添加成功', 5);
+                this.setState({
+                    visible: false,
+                });
+            };
+        }
     };
 
     private handleOpenCreate = () => {
+        this.setState({
+            visible: true
+        })
+    };
+
+    private handleDelete = async (value) => {
+        const id = await removeUser(`/users/${value}`);
+        if (id) {
+            message.success('删除成功', 5);
+            this.loadList();
+        };
     };
 
     render() {
-        
+
         return (
             <div>
                 <div style={{
@@ -167,7 +237,8 @@ export default class Users extends React.Component<IState> {
                     <Button
                         type="primary"
                         icon={<PlusCircleOutlined />}
-                        onClick={(e) => this.handleOpenCreate()}>
+                        onClick={(e) => this.handleOpenCreate()}
+                        >
                         新增
                     </Button>
                 </div>
@@ -177,9 +248,13 @@ export default class Users extends React.Component<IState> {
                     dataSource={this.state.users}
                     pagination={this.state.pagination} />
                 <User
-                     visible={true}
-                     title={'用户信息'}
-                     modelWidth={1200}
+                    visible={this.state.visible}
+                    title={'用户信息'}
+                    user={this.state.user}
+                    modelWidth={900}
+                    menuTreeData={this.state.menuTreeData}
+                    closeForm={this.closeForm}
+                    onCreate={this.onCreate}
                 />
             </div>
         )

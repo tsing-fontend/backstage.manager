@@ -193,34 +193,20 @@ export default class Menu extends React.Component<IProps> {
                         {...layout}
                         initialValues={menu}>
                         <Row gutter={24}>
-                            <Col span={24}>
-                                <Form.Item
-                                    name="pid"
-                                    label="上级菜单"
-                                    rules={[{ required: true, message: '请选择上级菜单!' }]}>
-                                    <TreeSelect
-                                        style={{ width: '100%' }}
-                                        // value={this.state.pid}
-                                        dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                                        treeData={menuTree}
-                                        placeholder="请选择"
-                                        treeDefaultExpandAll/>
-                                </Form.Item>
-                            </Col>
 
                             <Col span={24}>
                                 <Form.Item
                                     name="type"
                                     label="菜单类型"
                                     rules={[{ required: true, message: '请选择菜单类型!' }]}>
-                                    <Radio.Group onChange={ (e) => handlerChangeType(e) }>
-                                        <Radio value={'catalog'}>目录</Radio>
+                                    <Radio.Group>
+                                        {/* <Radio value={'catalog'}>目录</Radio> */}
                                         <Radio value={'menu'}>菜单</Radio>
-                                        <Radio value={'button'}>按钮</Radio>
+                                        {/* <Radio value={'button'}>按钮</Radio> */}
                                     </Radio.Group>
                                 </Form.Item>
                             </Col>
-                            {this.content(menuType)}
+                            {this.content('menu')}
 
                         </Row>
                     </Form>

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Divider, Button, Table, Dropdown, Switch, message, Tag } from 'antd';
-import { PlusCircleOutlined, DownOutlined, MinusCircleTwoTone, PlusCircleTwoTone } from '@ant-design/icons';
+import { Button, Table, message, Tag } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
 import { ColumnProps } from 'antd/lib/table';
 import Menu from '../menu/menu';
-import { getMenuTree, removeMenu, getMenu, saveMenu, updateMenu } from '../../api/auth/menu';
+import { removeMenu, getMenu, saveMenu, updateMenu } from '../../api/auth/menu';
 import MenuPoJo from '../../../interface/menu';
 
 
@@ -28,10 +28,8 @@ export default class AuthMenus extends React.Component<IState> {
 
     private loadList = async () => {
 
-        let res = await getMenuTree('/menus/tree');
-        if(!res){
-        }
-        let data: MenuPoJo[] = res;
+        let res = await getMenu('/menus?current=1&size=10');
+        let data: MenuPoJo[] = res.records;
         this.setState({
             menus: data,
             tableLoading: false
@@ -148,7 +146,6 @@ export default class AuthMenus extends React.Component<IState> {
     
     private handleOpenUpdate = async (record) => {
 
-           record= await getMenu(`/menus/${record.id}`);
            this.setState({
                 visible: true,
                 menuTree: this.state.menus,
@@ -213,15 +210,7 @@ export default class AuthMenus extends React.Component<IState> {
                     rowKey="id"
                     columns={this.columns}
                     dataSource={this.state.menus}
-                    pagination={false}
-                    expandable={{
-                        expandIcon: ({ expanded, onExpand, record }) =>
-                          expanded ? (
-                            <MinusCircleTwoTone onClick={e => onExpand(record, e)} />
-                          ) : (
-                            <PlusCircleTwoTone onClick={e => onExpand(record, e)} />
-                          )
-                      }}/>
+                    pagination={false}/>
                 <Menu
                     visible={this.state.visible}
                     menu={this.state.menu}
