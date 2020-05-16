@@ -1,10 +1,11 @@
 import React from 'react';
-import { Menu } from 'antd';
+import { Menu} from 'antd';
 import {
     MenuOutlined,
     DashboardOutlined,
     UserOutlined,
 } from '@ant-design/icons';
+import Icon from '@ant-design/icons';
 import Link from 'next/link';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { connect } from 'react-redux';
@@ -35,6 +36,7 @@ class MenuComponent extends React.Component<IProps, IState> {
         showMenus.push({
            path: menu.requestUrl,
            title: menu.name,
+          //  icon: `<UserOutlined/>`
         })
       });
       this.setState({
@@ -72,14 +74,18 @@ class MenuComponent extends React.Component<IProps, IState> {
                           {menuData[i].title}
                         </span>
                       )}
-                      icon={menuData[i].icon}>
+                      icon={menuData[i].icon}
+                      // icon={<Icon/>}
+                      >
                       {children}
                     </SubMenu>
                   )
         
                 } else {
                   el.push(
-                    <Menu.Item key={menuData[i].path} title={menuData[i].title} icon={menuData[i].icon}>
+                    <Menu.Item key={menuData[i].path} title={menuData[i].title}
+                       icon={menuData[i].icon}
+                      >
                       <Link href={menuData[i].path}>
                         <span>{menuData[i].title}</span>
                       </Link>
