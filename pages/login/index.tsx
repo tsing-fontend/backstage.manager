@@ -16,7 +16,7 @@ class Index extends React.Component<Props> {
     private onFinish = async value => {
         // const user = await loginUser(`/login`, value);
         if (true) {
-            this.props.userActions.saveUser({"id":'416667e828ae4fcdbc683e2fb1a67996'});
+            this.props.userActions.saveUser({"id":'416667e828ae4fcdbc683e2fb1a67996',"nickName": '青衣'});
             message.success('登陆成功', 5);
             Router.push('/');
         } else {

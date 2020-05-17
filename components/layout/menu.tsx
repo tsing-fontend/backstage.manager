@@ -5,7 +5,6 @@ import {
     DashboardOutlined,
     UserOutlined,
 } from '@ant-design/icons';
-import Icon from '@ant-design/icons';
 import Link from 'next/link';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { connect } from 'react-redux';
