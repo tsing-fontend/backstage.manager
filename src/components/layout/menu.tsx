@@ -25,12 +25,11 @@ class MenuComponent extends React.Component<IProps, IState> {
     menus: any = [
         { path: "/", title: "仪表盘", icon: <DashboardOutlined/> },
         {
-          path: "/product",
           title: "产品维护",
           icon: <ContainerOutlined />,
           children: [
             {
-              path: "/pig",
+              path: "/cms/pigs",
               title: "技术猪"
             }
           ]
