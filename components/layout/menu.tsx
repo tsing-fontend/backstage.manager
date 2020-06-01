@@ -26,22 +26,6 @@ class MenuComponent extends React.Component<IProps, IState> {
     };
     
     componentDidMount() {
-        this.loadUser();
-    }
-
-    private loadUser = async () => {
-      let showMenus = [];
-      const menus = await findUser(`/users/menus/${this.props.user.id}`);
-      menus.forEach(menu => {
-        showMenus.push({
-           path: menu.requestUrl,
-           title: menu.name,
-          //  icon: `<UserOutlined/>`
-        })
-      });
-      this.setState({
-        menus: showMenus
-      });
     };
     
     menus: any = [
@@ -54,7 +38,7 @@ class MenuComponent extends React.Component<IProps, IState> {
     ];
 
     render() {
-        // console.log(this.props);
+      
         const createMenu = (menuData) => {
             let submenuIndex = 0;
             let menu = [];
@@ -101,7 +85,7 @@ class MenuComponent extends React.Component<IProps, IState> {
         return (
             <div>
                 <Menu theme="dark" mode="inline" {...this.props}>
-                {createMenu(this.state.menus)}
+                {createMenu(this.menus)}
                 </Menu>
           </div>
         )
