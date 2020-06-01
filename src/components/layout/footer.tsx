@@ -6,7 +6,7 @@ export default class FooterComponent extends React.Component {
     render() {
         return (
             <div>
-                <Footer style={{ textAlign: 'center' }}> Boc ©2020 Created by Tsing</Footer>
+                <Footer style={{ textAlign: 'center' }}>Boc ©2020 Created by Tsing</Footer>
             </div>
         )
     }

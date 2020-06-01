@@ -10,8 +10,8 @@ import HeaderComponent from '../components/layout/header';
 // persist store
 import {persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import "antd/dist/antd.css";
-import './index.css';
+import "antd/dist/antd.less";
+import './index.less';
 
 // 自定义组件
 import FaviconHeaderComponent from '../components/layout/faviconheader';

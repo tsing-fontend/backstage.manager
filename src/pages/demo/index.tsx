@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import * as counterActions from '../../actions/counter';
 import * as userActions from '../../actions/user';
 import { bindActionCreators } from 'redux';
-import "antd/dist/antd.css";
+import "antd/dist/antd.less";
+import './demo.less';
 
 interface Props {
     counter: number,
@@ -114,6 +115,11 @@ class Index extends React.Component<Props> {
                     sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                     scrolling="auto"
                 /> */}
+
+                <h1>测试 less</h1>
+                <div className="test">
+                    ceshi
+                </div>
             </div>
         )
     }

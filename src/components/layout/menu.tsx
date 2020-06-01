@@ -1,14 +1,12 @@
 import React from 'react';
 import { Menu} from 'antd';
 import {
-    MenuOutlined,
     DashboardOutlined,
-    UserOutlined,
+    ContainerOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { connect } from 'react-redux';
-import { findUser } from '../../pages/api/auth/user';
 
 interface IProps {
     user: any,
@@ -23,17 +21,20 @@ class MenuComponent extends React.Component<IProps, IState> {
     readonly state = {
       menus: [],
     };
-    
-    componentDidMount() {
-    };
-    
+
     menus: any = [
         { path: "/", title: "仪表盘", icon: <DashboardOutlined/> },
-        { path: "/auth/user/users", title: "用户管理", icon: <UserOutlined /> },
-        // { path: "/auth/role/roles", title: "角色管理", },
-        { path: "/auth/menu/menus", title: "菜单管理", icon: <MenuOutlined /> },
-        // { path: "/auth/department/departments", title: "部门管理", },
-        // { path: "/auth/position/positions", title: "职位管理", },
+        {
+          path: "/product",
+          title: "产品维护",
+          icon: <ContainerOutlined />,
+          children: [
+            {
+              path: "/pig",
+              title: "技术猪"
+            }
+          ]
+        }
     ];
 
     render() {

@@ -3,10 +3,9 @@ import Router from 'next/router';
 import { connect } from 'react-redux';
 import { Form, Button, Divider, message } from 'antd';
 import { LoginOutlined } from '@ant-design/icons';
-import { loginUser } from '../api/auth/user';
 import * as userActions from '../../actions/user';
 import { bindActionCreators } from 'redux';
-import './index.css';
+import './index.less';
 
 interface Props {
     userActions: any,
