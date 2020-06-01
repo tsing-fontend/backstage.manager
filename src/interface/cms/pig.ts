@@ -4,5 +4,5 @@ export default interface PigPojo {
     remark: string;
     imageUrl: string;
     sequence: number;
-    recommend: boolean;
+    recommend: any;
 }
