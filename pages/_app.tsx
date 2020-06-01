@@ -4,16 +4,17 @@ import loggerMiddleware from 'redux-logger';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { Layout } from 'antd';
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
+
+import HeaderComponent from '../components/layout/header';
 // persist store
 import {persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import {PersistGate} from 'redux-persist/integration/react';
 import "antd/dist/antd.css";
 import './index.css';
 
 // 自定义组件
-import HeaderComponent from '../components/layout/header';
+import FaviconHeaderComponent from '../components/layout/faviconheader';
 import MenuComponent from '../components/layout/menu';
 import FooterComponent from '../components/layout/footer';
 import BreadcrumbComponent from '../components/breadcrumb';
@@ -38,6 +39,7 @@ class MyApp extends App<Props> {
 
         const { Component, pageProps, router } = this.props;
         const { asPath, pathname } = router;
+        console.log(this.props);
         let isLogin = false;
 
         if ('/login' === asPath || '/login' === pathname) {
@@ -48,7 +50,7 @@ class MyApp extends App<Props> {
 
         return (
             <div>
-                <HeaderComponent />
+                <FaviconHeaderComponent />
                 <Provider store={store}>
                     {
                         isLogin ?
@@ -66,7 +68,7 @@ class MyApp extends App<Props> {
                                 <MenuComponent />
                             </Sider>
                             <Layout className="site-layout" style={{ marginLeft: 200 }}>
-                                <Header className="site-layout-background" style={{ padding: 0 }} />
+                                <HeaderComponent/>
                                 <BreadcrumbComponent location={ breadcrumbmenu } />
                                 <Content style={{ margin: '10px 0px 0', overflow: 'initial' }}>
                                     <div className="site-layout-background" style={{ padding: 0, textAlign: 'center' }}>
