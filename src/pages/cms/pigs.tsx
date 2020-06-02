@@ -71,12 +71,19 @@ export default class Index extends React.Component<IState> {
             "title": "描述",
             "dataIndex": "remark",
             "key": "remark",
+            "ellipsis": true,
         },
         {
             "align": "center",
             "title": "图片",
             "dataIndex": "imageUrl",
             "key": "imageUrl",
+            render:(record) => {
+                return <img src={record}
+                            alt=""
+                            style={{width:'auto',height:'50px'}}
+                        />
+            }
         },
         {
             "align": "center",
@@ -167,7 +174,6 @@ export default class Index extends React.Component<IState> {
             visible: true,
             pig: value,
         });
-        this.loadPigs(1, 10);
     };
 
     private handleDelete = async (value) => {
@@ -175,7 +181,6 @@ export default class Index extends React.Component<IState> {
         if (id) {
             message.success('删除成功', 5);
         };
-
         this.loadPigs(1, 10);
     };
 
@@ -195,15 +200,17 @@ export default class Index extends React.Component<IState> {
                 </div>
                 <Table<PigPojo>
                     rowKey="id"
+                    bordered={true}
                     columns={this.columns}
                     dataSource={this.state.pigs}
                     pagination={this.state.pagination}/>
                 <Pig
-                modelName={'产品维护-技术猪'}
-                pig={this.state.pig}
-                visible={this.state.visible}
-                closeForm={this.closeForm}
-                onCreate={this.onCreate}/>
+                    modelName={'产品维护-技术猪'}
+                    pig={this.state.pig}
+                    visible={this.state.visible}
+                    closeForm={this.closeForm}
+                    onCreate={this.onCreate}
+                />
             </div>
         )
     }

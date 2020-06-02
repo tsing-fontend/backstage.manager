@@ -17,6 +17,7 @@
     "echarts-for-react": "^2.0.15-beta.1",
     "less": "^3.11.2",
     "next": "9.3.6",
+    "qiniu-js": "^2.5.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-redux": "^7.2.0",
