@@ -1,9 +1,8 @@
 import React from 'react';
-import { UploadOutlined } from '@ant-design/icons';
-import { Modal, Form, Row, Col, Input, Radio, Upload, Button, message } from 'antd';
-import * as qiniu from 'qiniu-js'
+import { Modal, Form, Row, Col, Input, Radio, Upload } from 'antd';
 import { qinNiuToken } from '../api/third/qiniu';
-
+import ImageUpload from '../components/image.upload';
+import ImgCrop from 'antd-img-crop';
 
 interface IState {
     modelName: string,
@@ -17,6 +16,19 @@ interface IProp {
 }
 
 export default class Pig extends React.Component<IState, IProp> {
+
+    readonly state = {
+        imageUrl: '',
+    };
+
+
+    private handlerShowPic = (value) => {
+        if (value && value.file && value.file && value.file.response) {
+            this.setState({
+                imageUrl: value.file.response.key
+            });
+        }
+    };
 
     render() {
         const layout = {
@@ -32,9 +44,15 @@ export default class Pig extends React.Component<IState, IProp> {
 
         const autoSize = { minRows: 6, maxRows: 32 };
 
-
         const { modelName, visible, closeForm, onCreate } = this.props;
         let pig: any = this.props.pig;
+
+        const fileList = [{
+            uid: '-1',
+            name: 'image.png',
+            status: 'done',
+            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+          }];
 
         const MenuModelForm = ({ visible }) => {
             const [form] = Form.useForm();
@@ -52,6 +70,7 @@ export default class Pig extends React.Component<IState, IProp> {
                             .validateFields()
                             .then(values => {
                                 values.id = pig.id;
+                                values.imageUrl = `http://qiniu.tying.info/${this.state.imageUrl}`;
                                 onCreate(values);
                             })
                             .catch(info => {
@@ -102,15 +121,27 @@ export default class Pig extends React.Component<IState, IProp> {
                                 </Form.Item>
                             </Col>
 
-                            <Col span={24}>
-                                <Form.Item
-                                    name="imageUrl"
-                                    label="图片"
-                                    rules={[{ required: true, message: '请填写选择图片!' }]}>
-                                    <Input autoComplete="off"/>
+                            {/* <Col span={24}>
+                                <Form.Item name="file" valuePropName="fileList"  noStyle>
+                                    <ImgCrop rotate>
+                                        <Upload
+                                            name="file"
+                                            listType="picture-card"
+                                            onChange={this.handlerShowPic}
+                                            action="https://upload-z1.qiniup.com"
+                                            data={this.state.qinniu}>
+                                            {fileList.length < 5 && '+ 上传'}
+                                        </Upload>
+                                     </ImgCrop>
                                 </Form.Item>
-                            </Col>
+                            </Col> */}
 
+                            <Col span={24}>
+                                <ImageUpload
+                                    fileList={fileList}
+                                    handlerShowPic={this.handlerShowPic}
+                                />
+                            </Col>
                         </Row>
                     </Form>
                 </Modal>
