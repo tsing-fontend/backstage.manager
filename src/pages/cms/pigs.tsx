@@ -148,7 +148,6 @@ export default class Index extends React.Component<IState> {
     };
 
     private onCreate = async (value) => {
-        console.log(value);
         if (value.id) {
             const id = await updatePig(`/pigs/${value.id}`, value);
             if (id) {
